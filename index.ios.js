@@ -34,6 +34,7 @@ export default class SavtaPhone extends Component {
         //   if contact.phoneNumbers 
         // })
         // console.log("filtered contacts", contacts);
+        contacts = contacts.slice(3,10)
         this.setState({contacts: contacts});
       });
 
@@ -52,7 +53,7 @@ export default class SavtaPhone extends Component {
       }
 
       const contactsView = this.state.contacts.map(function(contact, index){
-        return <Button key={index} title={contact.familyName} onPress={() => Communications.phonecall('4692619137', true)}/>;
+        return <Button key={index} title={contact.givenName} onPress={() => Communications.phonecall('4692619137', false)}/>;
       })
  
     return (
