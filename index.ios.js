@@ -9,11 +9,13 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  Button,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 
 import Communications from 'react-native-communications';
+
+import Button from 'apsl-react-native-button'
 
 var Contacts = require('react-native-contacts');
 
@@ -34,7 +36,7 @@ export default class SavtaPhone extends Component {
         //   if contact.phoneNumbers 
         // })
         // console.log("filtered contacts", contacts);
-        contacts = contacts.slice(3,10)
+        //contacts = contacts.slice(3,10)
         this.setState({contacts: contacts});
       });
 
@@ -48,18 +50,24 @@ export default class SavtaPhone extends Component {
  
       counter++;
       if(counter==2){
-        console.log("state.contacts[0]", this.state.contacts[0]);
+        console.log("state.contacts[0]", this.state.contacts[0].phoneNumbers[0].number);
 
       }
 
       const contactsView = this.state.contacts.map(function(contact, index){
-        return <Button key={index} title={contact.givenName} onPress={() => Communications.phonecall('4692619137', false)}/>;
+        return       <Button
+        style={{backgroundColor: 'pink', height: 70, margin: 40}} textStyle={{fontSize: 60}}
+        //JON: above is what you would play with for the button styling   
+        onPress={() => Communications.phonecall(contact.phoneNumbers[0].number, false)}
+        key={index}>
+        {contact.givenName}
+      </Button>
       })
  
     return (
-      <View style={styles.container}>
+      <ScrollView>
         {this.state.contacts.length ? contactsView : null}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -85,3 +93,6 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('SavtaPhone', () => SavtaPhone);
+
+
+ 
